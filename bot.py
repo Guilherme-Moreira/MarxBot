@@ -6,7 +6,7 @@ from operator import itemgetter
 
 # ---=== Start of init ===---
 
-prefix = '&'
+prefix = '$'
 
 bot = commands.Bot(command_prefix=prefix)
 
@@ -41,7 +41,7 @@ def updatePoints(userId, points):
 
 @bot.event
 async def on_ready():  # Init checking
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Товарищ &help"))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game("Товарищ $help"))
     print('Ready to go.')
 
 
