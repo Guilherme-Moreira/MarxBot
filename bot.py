@@ -86,12 +86,6 @@ async def ping(ctx):
 
 
 @bot.command()
-async def echo(ctx, *, content: str):
-    ''' Echoes the message sent'''
-    await ctx.send(content)
-
-
-@bot.command()
 async def points(ctx, *, member: discord.Member):
     ''' Displays the amount of CommiePoints a specific user has'''
     p = db.search(query.id == member.id)
