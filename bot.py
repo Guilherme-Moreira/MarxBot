@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import keys
+import keys, words
 import tinydb
 from operator import itemgetter
 
@@ -9,18 +9,6 @@ from operator import itemgetter
 prefix = '$'
 
 bot = commands.Bot(command_prefix=prefix)
-
-
-changeWords = {  # Defines a dictionary to keep track of which words should be exchanged
-    'eu': 'nós',
-    'meu': 'nosso',
-    'minha': 'nosso',
-    'meus': 'nossos',
-    'minhas': 'nossos'
-}
-
-goodWords = ['marx', 'comunismo', 'ussr', 'proletário', 'proletariado', 'proletarios', 'proletario', 'dilma', 'lula']
-badWords = ['capitalismo', 'eua', 'usa', 'bolsonaro', 'burgues', 'burguesia', 'burguês']
 
 
 db = tinydb.TinyDB('data.json')
@@ -47,7 +35,7 @@ async def on_ready():  # Init checking
 
 @bot.event
 async def on_message(message):
-    words = message.content.lower().split(' ')  # plits the message listened into a list of words for iteration
+    messageContent = message.content.lower().split(' ')  # plits the message listened into a list of words for iteration
 
     ID = message.author.id
 
@@ -58,19 +46,19 @@ async def on_message(message):
 
     points = 0
 
-    for word in words:
+    for word in messageContent:
         if not botMessage:
-            if word in goodWords:
+            if word in words.goodWords:
                 await message.add_reaction('♥')
                 points += 1
-            if word in badWords:
+            if word in words.badWords:
                 await message.add_reaction('😡')
                 points -= 1
 
     if not botMessage:
         updatePoints(ID, points)
 
-    newMessage = [changeWords[word] if word in changeWords else word for word in words]  # changes words if necessary
+    newMessage = [words.changeWords[word] if word in words.changeWords else word for word in messageContent]  # changes words if necessary
     if newMessage != words and not botMessage:  # if the message changes, send it
         newMessage = ' '.join(newMessage)
         # await sendMessage(message.channel, "Camarada, seja um bom comunista e use: " + newMessage)
