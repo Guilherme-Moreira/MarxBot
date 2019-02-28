@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-import keys, words
+import keys
+import words
 import tinydb
 from operator import itemgetter
 
