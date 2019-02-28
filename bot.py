@@ -73,8 +73,8 @@ async def on_message(message):
     newMessage = [changeWords[word] if word in changeWords else word for word in words]  # changes words if necessary
     if newMessage != words and not botMessage:  # if the message changes, send it
         newMessage = ' '.join(newMessage)
-        await sendMessage(message.channel, "Camarada, seja um bom comunista e use: " + newMessage)
-
+        # await sendMessage(message.channel, "Camarada, seja um bom comunista e use: " + newMessage)
+        await sendMessage(message.channel, "{}*".format(newMessage))
     await bot.process_commands(message)  # see if the message contains any commands
 
 
@@ -104,7 +104,7 @@ async def ranking(ctx):
     rank = sorted(db.all(), key=itemgetter('points'), reverse=True)
     newMessage = []
     for i in range(len(rank)):
-        user = bot.get_user(rank[0]['id'])
+        user = bot.get_user(rank[i]['id'])
         if user is not None and i < 11:
             userPoints = rank[i]['points']
             newMessage.append("{}. {} com {} CommiePoints\n".format(i+1, user.name, userPoints))
