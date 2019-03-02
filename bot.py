@@ -60,7 +60,7 @@ async def on_message(message):
         updatePoints(ID, points)
 
     newMessage = [words.changeWords[word] if word in words.changeWords else word for word in messageContent]  # changes words if necessary
-    if newMessage != words and not botMessage:  # if the message changes, send it
+    if newMessage != messageContent and not botMessage:  # if the message changes, send it
         newMessage = ' '.join(newMessage)
         # await sendMessage(message.channel, "Camarada, seja um bom comunista e use: " + newMessage)
         await sendMessage(message.channel, "{}*".format(newMessage))
